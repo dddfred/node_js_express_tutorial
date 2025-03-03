@@ -1,0 +1,1 @@
+Here it is the result: Hello from first text file., Hello from second text file.Here it is the result: Hello from first text file., Hello from second text file.
