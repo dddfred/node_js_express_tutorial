@@ -1,45 +1,44 @@
-const _ = require('lodash');
+const EventEmitter =  require('events'); //gets back a class (notice capitalization of variable)
 
-const items = [1,[2, [4]]];
+//if we want to create something custom, we need to extend the class
+//if we simply want to emit and event and listen for it, we can create an instance.
 
-const newItems = _.flatten(items);
-
-console.log(newItems);
-
-console.log('Hello World!');
+const customEmitter = new EventEmitter();
 
 /**
- * LOCAL from a repo
- * The package.json has a list of all the dependecies that the project needs, it is up to us to install those dependencies by running the command `npm install`. This will install all dependencies needed.
+ * on - listen for an event
+ * emit - emit an event
  * 
- * To unistall a package, we can use the command `npm unistall <packageName>`
- * 
- * We have a nuclear approach to unistall a package, which involves deleting the node_modules folder and the package-lock.json file.
- * We can simply delete the folder from the side bar or run this command `rm -rf node_modules`
- * We can also simple delete the package-lock.json file from the side bar.
- * DO NOT FORGET to remove the depencie from the dependencies list in the package.json if you dont want 
- * this dependencie anymore, otherwise, you'll reinstall said dependencie.
- * After this, we can run `npm install` to reinstall desired packages.
- * You may want to do this in case you get some errors like permission errors or faulty packages.
- * 
- * LOCAL first time
- * To install new packages onto your project for the first time, we can do so by typing the command
- *  `npm i <packageName>`
- * 
- * GLOBAL
- * You can install packages globally, instead of locally by applying the `-g` flag
- * You may want to do this if you have a package that you use constantly and is advantageous to globally install it
- * 
- * The full command on mac to install a package globally is `sudo npm install -g <packageName>`
- * 
- * Many of the packages cause issues when installed globally
- * 
- * it is better to use npx
- *
- * 
- * why package.json>?
- * Many of the dependencies have versions, package.json includes the version of the dependencie so if a 
- * package update its version and gets rid of some features, our project wont be affected and there will 
- * no errors
- * 
+ * on -  takes in one parameter, which is a string with the name of the event
+ * on - we can also have a callback function as a parameter that will let us do something when this event happens,
+ * in other words, react to this event
+ * emit - takes on a string with the SAME name as our listener, this way we tell the listener to what emmitter to
+ * react
  */
+
+//listener
+customEmitter.on('response', (name, id) =>{
+     console.log(`data received: ${name}, ${id}`);
+});
+customEmitter.on('response', () =>{
+     console.log(`some other logic here`);
+});
+
+//emitter                      //arguments
+customEmitter.emit('response', 'john', 34)
+
+/**Summary
+ * 
+ * We create an instance from the class that we get from the events module
+ * We have two methods, the on() method which reacts to an emmiter when it emits
+ * And the emit() method that initiates the emit. 
+ * strings on both methods need to be the same to link them to one another
+ * 
+ * NOTE: 
+ * 1. we can have as many functions as we want as listeners and do some other logic when they get triggered
+ * 2. The order matters, we need to declare a listener before we declare and emitter, this way when the emitter
+ * get triggered, the listener will already be listening 
+ * 3. We can pass in arguments when we trigger the emit function
+ */
+
+//For another example of events, look at 3.6_event_emitter.js
